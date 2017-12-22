@@ -17,6 +17,8 @@ def get_credentials():
     lines = len(configdata)
     l1 = configdata[0] if lines > 0 else ''
     l2 = configdata[1] if lines > 1 else ''
+    username = ''
+    password = ''
     if (not l1.startswith('username')) or (not l2.startswith('password:')):
         username = input('Username: ')
         password = getpass.getpass(prompt='Password: ', stream=None)
@@ -32,7 +34,7 @@ def get_credentials():
                                data)
                 print("Saved!")
 
-        else:
-            username = re.sub('username: ?', '', l1)
-            password = re.sub('password: ?', '', l2)
+    else:
+        username = re.sub('username: ?', '', l1)
+        password = re.sub('password: ?', '', l2)
     return (username, password)
