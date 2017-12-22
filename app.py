@@ -1,5 +1,5 @@
 from fbchat import Client
-import getpass
+import config
 
 
 class Martzi(Client):
@@ -12,9 +12,8 @@ class Martzi(Client):
 
 version = 0.1
 print('Welcome to Matrzi v' + str(version))
-# TODO: maybe read username & password from config file?
-username = input('Username: ')
-password = getpass.getpass(prompt='Password: ', stream=None)
+
+(username, password) = config.get_credentials()
 try:
     client = Martzi(username, password)
 except Exception:
