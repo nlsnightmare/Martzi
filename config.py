@@ -3,6 +3,9 @@ import getpass
 
 configfile = 'config.dat'
 configdata = []
+preferences = {
+    'starting_char': '!'
+}
 
 try:
     f = open('config.dat', 'r')
@@ -38,3 +41,21 @@ def get_credentials():
         username = re.sub('username: ?', '', l1)
         password = re.sub('password: ?', '', l2)
     return (username, password)
+
+
+def parse_file(filename):
+    """Parses a data file and returns a dict"""
+
+    answers = {}
+    f = open(filename, 'r')
+    lines = f.readlines()
+    pattern = re.compile(': *\n')
+    for l in lines:
+        # if l.endswith(':\n'):
+        if not pattern.search(l) is None:
+            question = re.sub(': *\\n', '', l)
+            answers[question] = []
+            continue
+        ans = l.strip()
+        answers[question].append(ans)
+    return answers

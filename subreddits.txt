@@ -1,0 +1,10 @@
+meme:
+	2meirl4meirl
+	PrequelMemes
+	SequelMemes
+news:
+	worldnews
+local:
+	greece
+hobbies:
+	chess
