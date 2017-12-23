@@ -4,6 +4,7 @@ from fbchat import Client
 import random
 import re
 import config
+import requests
 
 
 class Martzi(Client):
@@ -20,10 +21,18 @@ class Martzi(Client):
         print("I recieved command:", cmd)
         self.execute_command(cmd)
 
+    def send_random_reddit_thread(self, subreddit):
+        url = 'https://www.reddit.com/r/' + subreddit + '/.json'
+        headers = {'User-agent': 'Matrzi v' + str(VERSION)}
+        r = requests.get(url, headers=headers)
+        print(r.json())
+
+
     def execute_command(self, cmd):
         if cmd in subreddit.keys():
             # Select a random subreddit
             sub = subreddit[cmd][random.randint(0, len(subreddit[cmd]) - 1)]
+            self.send_random_reddit_thread(sub)
 
 
 def login():
@@ -32,7 +41,9 @@ def login():
         client = Martzi(username, password, logging_level=30)
         print("Logged in successfully!")
         print("Listening...")
-        client.listen()
+        # client.listen()
+        client.send_random_reddit_thread('PrequelMemes')
+        input()
     except Exception as e:
         print("Couldn't login to facebook!")
         print(e)
