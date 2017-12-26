@@ -21,6 +21,7 @@ class Martzi(Client):
         cmd = m.groups(0)[0]
         ans = self.execute_command(cmd, author_id)
 
+        print(ans)
         self.sendMessage(ans, thread_id=thread_id, thread_type=thread_type)
 
     def execute_command(self, cmd, sender):
@@ -41,10 +42,21 @@ class Martzi(Client):
             # TODO: Add customized message
             msg = self.get_username(sender) + " can't kill me!"
             return msg
+        else:
+            msg = get_answer(cmd)
+            return msg
 
     def get_username(self, user_id):
         user = self.fetchUserInfo(user_id)[user_id]
         return user.name
+
+def get_answer(key):
+    if key in answers.keys():
+        r = random.randint(0, len(answers[key]) - 1)
+        return answers[key][r]
+    else:
+        r = random.randint(0, len(answers['unknown_command']) - 1)
+        return answers['unknown_command']
 
 
 def login():
@@ -65,4 +77,5 @@ print('Welcome to Matrzi v' + str(VERSION))
 
 (username, password) = config.get_credentials()
 subreddit = config.parse_file('subreddits.txt')
+answers = config.parse_file('answers.txt')
 login()
