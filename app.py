@@ -39,7 +39,15 @@ class Martzi(Client):
                 # TODO: Maybe send a dying message?
                 exit()
             # TODO: Add customized message
-            return(sender, "doens't have the right to kill me")
+            msg = self.get_username(sender) + " can't kill me!"
+            return msg
+
+    def get_username(self, user_id):
+        user = self.fetchUserInfo(user_id)[user_id]
+        return user.name
+
+
+    
 
 
 def login():
