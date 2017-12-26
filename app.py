@@ -19,12 +19,11 @@ class Martzi(Client):
         pattern = re.compile('!(.*) ?.*')
         m = pattern.match(msg)
         cmd = m.groups(0)[0]
-        print("I recieved command:", cmd)
-        ans = self.execute_command(cmd)
+        ans = self.execute_command(cmd, author_id)
 
         self.sendMessage(ans, thread_id=thread_id, thread_type=thread_type)
 
-    def execute_command(self, cmd):
+    def execute_command(self, cmd, sender):
         if cmd in subreddit.keys():
             # Select a random subreddit
             sub = subreddit[cmd][random.randint(0, len(subreddit[cmd]) - 1)]
@@ -35,6 +34,12 @@ class Martzi(Client):
                 return text
             else:
                 return perma
+        elif cmd == 'die':
+            if sender in config.mods:
+                # TODO: Maybe send a dying message?
+                exit()
+            # TODO: Add customized message
+            return(sender, "doens't have the right to kill me")
 
 
 def login():

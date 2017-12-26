@@ -6,6 +6,7 @@ configdata = []
 preferences = {
     'starting_char': '!'
 }
+mods = []
 
 try:
     f = open('config.dat', 'r')
