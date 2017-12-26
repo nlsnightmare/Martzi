@@ -21,7 +21,6 @@ class Martzi(Client):
         cmd = m.groups(0)[0]
         ans = self.execute_command(cmd, author_id)
 
-        print(ans)
         self.sendMessage(ans, thread_id=thread_id, thread_type=thread_type)
 
     def execute_command(self, cmd, sender):
