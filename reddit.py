@@ -10,8 +10,8 @@ def send_random_reddit_thread(subreddit):
     data = json['data']['children']
     num_threads = len(data)
     rand = random.randint(0, num_threads - 1)
-    thread = data[rand]
-    print(thread)
-    input()
-
-send_random_reddit_thread('ProgrammerHumor')
+    thread = data[rand]['data']
+    permalink = thread['permalink']
+    url = thread['url']
+    selftext = thread['selftext']
+    return (permalink, url, selftext)
