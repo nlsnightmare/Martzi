@@ -4,7 +4,6 @@ import getpass
 configfile = 'config.dat'
 configdata = []
 preferences = {}
-mods = []
 
 
 def cleanup_data(data):

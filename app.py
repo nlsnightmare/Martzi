@@ -4,7 +4,6 @@ from fbchat import Client
 import random
 import re
 import config
-import requests
 import reddit
 
 
@@ -16,7 +15,8 @@ class Martzi(Client):
         msg = message_object.text
         if author_id == self.uid or (not msg.startswith('!')):
             return  # Ignore your messages
-        pattern = re.compile('!(.*) ?.*')
+        c = config.preferences['starting_char']
+        pattern = re.compile(c + '(.*) ?.*')
         m = pattern.match(msg)
         cmd = m.groups(0)[0]
         ans = self.execute_command(cmd, author_id)
@@ -35,7 +35,7 @@ class Martzi(Client):
             else:
                 return perma
         elif cmd == 'die':
-            if sender in config.mods:
+            if sender in config.preferences['mods']:
                 # TODO: Maybe send a dying message?
                 exit()
             # TODO: Add customized message
