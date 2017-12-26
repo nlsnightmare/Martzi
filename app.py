@@ -47,9 +47,6 @@ class Martzi(Client):
         return user.name
 
 
-    
-
-
 def login():
     try:
         print("Logging in...")
