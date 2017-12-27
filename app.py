@@ -12,7 +12,10 @@ class Martzi(Client):
 
     def parse_command(self, s):
         c = config.preferences['starting_char']
-        pattern = re.compile(c + '(\S\?) ?.*')
+        if c in ['.', '^', '$', '*', '+', '?', '{', '\\', '[', '|', '(']:
+            c = '\\' + c
+
+        pattern = re.compile(c + '([^\s?]) ?.*')
         m = pattern.match(s)
         cmd = m.groups(0)[0]
         return cmd
@@ -20,7 +23,8 @@ class Martzi(Client):
     def onMessage(self, message_object, author_id,
                   thread_id, thread_type, **kwargs):
         msg = message_object.text
-        if author_id == self.uid or (not msg.startswith('!')):
+        starting_char = config.preferences['starting_char']
+        if author_id == self.uid or (not msg.startswith(starting_char)):
             return  # Ignore self messages
 
         cmd = self.parse_command(msg)
