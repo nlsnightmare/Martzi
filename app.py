@@ -15,7 +15,7 @@ class Martzi(Client):
         if c in ['.', '^', '$', '*', '+', '?', '{', '\\', '[', '|', '(']:
             c = '\\' + c
 
-        pattern = re.compile(c + '([^\s?]) ?.*')
+        pattern = re.compile(c + '([^\s?]+) ?.*')
         m = pattern.match(s)
         cmd = m.groups(0)[0]
         return cmd
