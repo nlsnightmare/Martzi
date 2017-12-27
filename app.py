@@ -10,16 +10,22 @@ import reddit
 class Martzi(Client):
     """This class interacts with the fbchat API."""
 
+    def parse_command(self, s):
+        c = config.preferences['starting_char']
+        pattern = re.compile(c + '(\S\?) ?.*')
+        m = pattern.match(s)
+        cmd = m.groups(0)[0]
+        return cmd
+
     def onMessage(self, message_object, author_id,
                   thread_id, thread_type, **kwargs):
         msg = message_object.text
         if author_id == self.uid or (not msg.startswith('!')):
-            return  # Ignore your messages
-        c = config.preferences['starting_char']
-        pattern = re.compile(c + '(.*) ?.*')
-        m = pattern.match(msg)
-        cmd = m.groups(0)[0]
+            return  # Ignore self messages
+
+        cmd = self.parse_command(msg)
         ans = self.execute_command(cmd, author_id)
+        print("Command is:", cmd)
 
         self.sendMessage(ans, thread_id=thread_id, thread_type=thread_type)
 
