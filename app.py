@@ -51,7 +51,7 @@ class Martzi(Client):
                 # TODO: Maybe send a dying message?
                 exit()
             # TODO: Add customized message
-            msg = "{n} can't kill me!"
+            msg = self.get_answer('denied')
             return msg
         else:
             return self.get_answer(cmd)
