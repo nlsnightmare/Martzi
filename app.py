@@ -54,8 +54,7 @@ class Martzi(Client):
             msg = "{n} can't kill me!"
             return msg
         else:
-            msg = self.get_answer(cmd)
-            return msg
+            return self.get_answer(cmd)
 
     def get_username(self, user_id):
         user = self.fetchUserInfo(user_id)[user_id]
@@ -67,7 +66,7 @@ class Martzi(Client):
             return answers[key][r]
         else:
             r = random.randint(0, len(answers['unknown_command']) - 1)
-            return answers['unknown_command']
+            return answers['unknown_command'][r]
 
 
 def login():
