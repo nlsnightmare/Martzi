@@ -29,7 +29,9 @@ class Martzi(Client):
 
         cmd = self.parse_command(msg)
         ans = self.execute_command(cmd, author_id)
-        print("Command is:", cmd)
+
+        user = self.get_username(author_id)
+        ans = ans.replace("{n}", user)
 
         self.sendMessage(ans, thread_id=thread_id, thread_type=thread_type)
 
@@ -49,23 +51,23 @@ class Martzi(Client):
                 # TODO: Maybe send a dying message?
                 exit()
             # TODO: Add customized message
-            msg = self.get_username(sender) + " can't kill me!"
+            msg = "{n} can't kill me!"
             return msg
         else:
-            msg = get_answer(cmd)
+            msg = self.get_answer(cmd)
             return msg
 
     def get_username(self, user_id):
         user = self.fetchUserInfo(user_id)[user_id]
         return user.name
 
-def get_answer(key):
-    if key in answers.keys():
-        r = random.randint(0, len(answers[key]) - 1)
-        return answers[key][r]
-    else:
-        r = random.randint(0, len(answers['unknown_command']) - 1)
-        return answers['unknown_command']
+    def get_answer(self, key):
+        if key in answers.keys():
+            r = random.randint(0, len(answers[key]) - 1)
+            return answers[key][r]
+        else:
+            r = random.randint(0, len(answers['unknown_command']) - 1)
+            return answers['unknown_command']
 
 
 def login():
