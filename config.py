@@ -40,14 +40,17 @@ def parse_file(filename):
     f = open(filename, 'r')
     lines = f.readlines()
     pattern = re.compile(': *\n')
+    args = re.compile(", *")
     for l in lines:
-        # if l.endswith(':\n'):
         if not pattern.search(l) is None:
-            question = re.sub(': *\\n', '', l)
-            answers[question] = []
+            questions = re.sub(': *\\n', '', l)
+            questions = args.split(questions)
+            for question in questions:
+                answers[question] = []
             continue
         ans = l.strip()
-        answers[question].append(ans)
+        for question in questions:
+            answers[question].append(ans)
     return answers
 
 
@@ -57,12 +60,11 @@ def parse_config():
     for l in configdata:
         m = pattern.match(l)
         (setting, parameters) = m.groups()
-        t = args.split(parameters)
-        if len(t) == 1:
-            parameters = t[0]
+        p = args.split(parameters)
+        if len(p) == 1:
+            parameters = p[0]
         else:
-            parameters = t
-
+            parameters = p
         preferences[setting] = parameters
 
 
